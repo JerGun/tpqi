@@ -10,7 +10,7 @@ function Home() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [products]);
 
   const fetchProducts = async () => {
     await axios
@@ -33,9 +33,9 @@ function Home() {
   };
 
   return (
-    <div className="h-full w-full px-10 py-5 space-y-5 bg-transparent">
+    <div className="h-full w-full p-10 py- space-y-5">
       <div className="h-11 flex space-x-5">
-        <div className="h-full w-fit space-x-3 pl-3 flex items-center rounded-lg text-black shadow-lg bg-white">
+        <div className="h-full w-fit space-x-3 pl-3 flex items-center rounded-lg text-black shadow-md bg-white">
           <Search className="h-1/2" />
           <input
             type="text"
@@ -54,7 +54,7 @@ function Home() {
           </button>
         </div>
         <button
-          className="h-full px-5 rounded-lg text-white bg-black bg-opacity-30"
+          className="h-full px-5 rounded-lg shadow-md text-white bg-black bg-opacity-30"
           onClick={() => {
             window.location.reload();
           }}
@@ -62,17 +62,17 @@ function Home() {
           <p>Reset</p>
         </button>
       </div>
-      <div className="h-full grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-2 gap-10">
         {products.map((product, i) => (
           <div
             key={i}
-            className="h-fit w-full rounded-xl shadow-md flex justify-between bg-white"
+            className="h-96 w-full rounded-xl shadow-md flex justify-between bg-white"
           >
-            <div className="h-full w-full flex shadow-md break-words">
+            <div className="h-full w-full flex break-words">
               <img
                 src={product.picture}
                 alt=""
-                className="h-full w-1/2 object-fill rounded-l-xl "
+                className="h-full w-5/12 object-cover rounded-l-xl"
               />
               <div className="w-1/2 p-3 space-y-3">
                 <div>
@@ -83,7 +83,9 @@ function Home() {
                 </div>
                 <div>
                   <p className="font-bold">Product Description:</p>
-                  <p className="text-gray-600">{product.productDescription}</p>
+                  <p className="text-gray-600 line-clamp-4">
+                    {product.productDescription}
+                  </p>
                 </div>
                 <div>
                   <p className="font-bold">Category:</p>

@@ -86,10 +86,7 @@ function Insert() {
   const handleDelete = async () => {
     await axios
       .delete(`http://localhost:9000/product?id=${params.productId}`)
-      .then(() => {
-        window.location.reload();
-        navigate("/");
-      })
+      .then(navigate("/"))
       .catch((err) => console.log(err));
   };
 
@@ -242,23 +239,27 @@ function Insert() {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="h-11 w-1/2 rounded-lg shadow-lg font-bold text-white bg-gray-600"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            onClick={handleDelete}
-            className="h-11 w-1/2 rounded-lg shadow-lg font-bold text-white bg-red-600"
-          >
-            Delete
-          </button>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="h-11 w-full rounded-lg shadow-lg font-bold text-white bg-blue-600"
+            className="h-11 w-full rounded-lg shadow-md font-bold text-white bg-blue-600"
           >
             {params.productId ? "Edit" : "Add"}
+          </button>
+          {params.productId && (
+            <button
+              type="submit"
+              onClick={handleDelete}
+              className="h-11 w-1/2 rounded-lg shadow-md font-bold text-white bg-red-600"
+            >
+              Delete
+            </button>
+          )}
+          <button
+            type="submit"
+            onClick={() => {
+              navigate("/");
+            }}
+            className="h-11 w-1/2 rounded-lg shadow-md font-bold text-white bg-gray-600"
+          >
+            Cancel
           </button>
         </div>
       </div>
