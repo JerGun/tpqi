@@ -90,6 +90,14 @@ function Insert() {
       .catch((err) => console.log(err));
   };
 
+  const validateWebsiteUrl = (url) => {
+    const pattern = new RegExp(
+      "(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?"
+    );
+    console.log(pattern.test(url));
+    return pattern.test(url);
+  };
+
   return (
     <div className="h-full w-full py-5 flex justify-center space-x-10">
       <div className="h-full w-1/2 py-5  px-10 space-y-10 bg-white rounded-xl shadow-lg">
@@ -124,7 +132,7 @@ function Insert() {
             </div>
             <div className="h-11 rounded-lg text-black bg-white border-2 border-black border-opacity-20">
               <input
-                type="text"
+                type="url"
                 placeholder="Image link"
                 className="h-full w-full px-3 bg-transparent"
                 value={formInput.picture}
@@ -135,8 +143,12 @@ function Insert() {
                   })
                 }
               />
-              {required && !formInput.picture && (
+              {required && !formInput.picture ? (
                 <p className="text-red-500">This field is required</p>
+              ) : (
+                !validateWebsiteUrl(formInput.picture) && (
+                  <p className="text-red-500">URL is invalid</p>
+                )
               )}
             </div>
           </div>
@@ -245,7 +257,6 @@ function Insert() {
           </button>
           {params.productId && (
             <button
-              type="submit"
               onClick={handleDelete}
               className="h-11 w-1/2 rounded-lg shadow-md font-bold text-white bg-red-600"
             >
@@ -253,7 +264,6 @@ function Insert() {
             </button>
           )}
           <button
-            type="submit"
             onClick={() => {
               navigate("/");
             }}

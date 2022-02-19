@@ -9,7 +9,7 @@ function Home() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    fetchProducts();
+    if (!keyword) fetchProducts();
   }, [products]);
 
   const fetchProducts = async () => {
@@ -22,18 +22,21 @@ function Home() {
   };
 
   const handleSearch = async () => {
-    if (keyword) {
-      await axios
-        .get(`http://localhost:9000/search?keyword=${keyword}`)
-        .then((response) => {
-          setProducts(response.data);
-        })
-        .catch((err) => console.log(err));
-    }
+    console.log(keyword);
+    await axios
+      .get(`http://localhost:9000/search?keyword=${keyword}`)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div className="h-full w-full p-10 py- space-y-5">
+    <div
+      className={`${
+        products.length > 2 && "h-full"
+      } h-screen w-full p-10 py- space-y-5`}
+    >
       <div className="h-11 flex space-x-5">
         <div className="h-full w-fit space-x-3 pl-3 flex items-center rounded-lg text-black shadow-md bg-white">
           <Search className="h-1/2" />
@@ -54,7 +57,7 @@ function Home() {
           </button>
         </div>
         <button
-          className="h-full px-5 rounded-lg shadow-md text-white bg-black bg-opacity-30"
+          className="h-full px-5 rounded-lg shadow-md text-white bg-gray-600"
           onClick={() => {
             window.location.reload();
           }}
